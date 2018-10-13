@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Dashtask - Login</title>
+
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+  <!-- Styles for this template-->
+  <link href="css/dashtask.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-image">
+  <div class="cover-orange">
+  </div>
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header text-center">
+        <img src="./assets/images/ICON_TASK_ALT.png" class="logo">
+      </div>
+      <div class="card-body">
+        <form id="loginForm">
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email required=" required"
+                autofocus="autofocus">
+              <label for="inputEmail">Email</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+              <label for="inputPassword">Senha</label>
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="remember-me">
+                Lembrar Senha
+              </label>
+            </div>
+          </div>
+          <div class="text-center">
+            <a class="d-block small" href="forgot-password.html">Esqueceu a senha?</a>
+          </div>
+          <a id="submitForm" class="btn btn-task btn-block text-white">Entrar</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script>
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    $("#submitForm").click(function (event) {
+      event.preventDefault();
+      $.ajax({
+        type: "POST",
+        datatype: "json",
+        url: "http://192.168.0.76:5000/login",
+        data: ({
+          email: $('#inputEmail').val(),
+          password: $('#inputPassword').val()
+        }),
+        success: function (result) {
+          if (result && result.token.length > 1) // you should do your checking here
+          {
+            console.log(result.token);
+            alert(window.localStorage.setItem("token", result.token));
+            alert(window.localStorage.getItem("token"));
+            window.location = 'file:///Users/ejcomp-mac/Documents/HACKATHON/dashtask/index.html'; //just to show that it went through
+          }
+          else {
+            alert("Deu ruim");
+          }
+        }
+      });
+      return false;
+    })
+  </script>
+
+</body>
+
+</html>
