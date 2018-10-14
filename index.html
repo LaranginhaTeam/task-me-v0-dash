@@ -177,73 +177,6 @@
         </div>
 
         <div id="map"></div>
-        <script>
-
-          var map, heatmap;
-
-          function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 17,
-              center: { lat: 37.775, lng: -122.434 },
-              mapTypeId: 'satellite'
-            });
-
-            heatmap = new google.maps.visualization.HeatmapLayer({
-              data: getPoints(),
-              map: map
-            });
-          }
-
-          function toggleHeatmap() {
-            heatmap.setMap(heatmap.getMap() ? null : map);
-          }
-
-          function changeGradient() {
-            var gradient = [
-              'rgba(0, 255, 255, 0)',
-              'rgba(0, 255, 255, 1)',
-              'rgba(0, 191, 255, 1)',
-              'rgba(0, 127, 255, 1)',
-              'rgba(0, 63, 255, 1)',
-              'rgba(0, 0, 255, 1)',
-              'rgba(0, 0, 223, 1)',
-              'rgba(0, 0, 191, 1)',
-              'rgba(0, 0, 159, 1)',
-              'rgba(0, 0, 127, 1)',
-              'rgba(63, 0, 91, 1)',
-              'rgba(127, 0, 63, 1)',
-              'rgba(191, 0, 31, 1)',
-              'rgba(255, 0, 0, 1)'
-            ]
-            heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-          }
-
-          function changeRadius() {
-            heatmap.set('radius', heatmap.get('radius') ? null : 20);
-          }
-
-          function changeOpacity() {
-            heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
-          }
-
-          // Heatmap data: 500 Points
-          function getPoints() {
-            navigator.geolocation.getCurrentPosition(function (position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-              map.setCenter(pos);
-            });
-            return [
-              new google.maps.LatLng(-22.133521, -51.4482311),
-              new google.maps.LatLng(-22.134058, -51.4514287),
-              new google.maps.LatLng(-22.134058, -51.4514287),
-            ];
-          }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap">
-        </script>
 
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -302,6 +235,228 @@
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
     <script src="js/demo/chart-area-demo.js"></script>
+
+    <script>
+
+      var map, heatmap;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: { lat: 37.775, lng: -122.434 },
+          mapTypeId: 'satellite'
+        });
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: getPoints(),
+          map: map
+        });
+      }
+
+      function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+      }
+
+      function changeGradient() {
+        var gradient = [
+          'rgba(0, 255, 255, 0)',
+          'rgba(0, 255, 255, 1)',
+          'rgba(0, 191, 255, 1)',
+          'rgba(0, 127, 255, 1)',
+          'rgba(0, 63, 255, 1)',
+          'rgba(0, 0, 255, 1)',
+          'rgba(0, 0, 223, 1)',
+          'rgba(0, 0, 191, 1)',
+          'rgba(0, 0, 159, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(63, 0, 91, 1)',
+          'rgba(127, 0, 63, 1)',
+          'rgba(191, 0, 31, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+        heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+      }
+
+      function changeRadius() {
+        heatmap.set('radius', heatmap.get('radius') ? null : 20);
+      }
+
+      function changeOpacity() {
+        heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+      }
+
+      // Heatmap data: 500 Points
+      function getPoints() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(pos);
+        });
+        var heatmapusers;
+        var heatmapcoords = [  new google.maps.LatLng() ];
+        $.ajax({
+          type: "GET",
+          datatype: "json",
+          url: `http://192.168.0.76:5000/api/user/?access_token=${window.localStorage.getItem("token")}`,
+          async: false,
+          success: function (result) {
+            if (result.code == 200) // you should do your checking here
+            {
+              heatmapusers = result;
+
+              for (let i in heatmapusers.users) {
+                for (let j in heatmapusers.users[i].locations) {
+                  console.log(heatmapusers.users[i].locations[j].lat + " , " + heatmapusers.users[i].locations[j].long)
+                  let easy = new google.maps.LatLng(heatmapusers.users[i].locations[j].lat, heatmapusers.users[i].locations[j].long);
+                  console.log(easy + "ssis");
+                  heatmapcoords.push(easy);
+                }
+              }
+            }
+            else {
+              alert("Não foi possível concluir");
+            }
+          }
+        });
+
+        console.log(heatmapcoords);
+        return [
+          
+        ];
+
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
 
 </body>
 

@@ -20,9 +20,6 @@
   <!-- Page level plugin CSS-->
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/> -->
-
-
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="css/dashtask.css" rel="stylesheet">
@@ -34,25 +31,25 @@
   <nav class="navbar navbar-expand navbar-dark bg-orange static-top">
 
     <a class="mr-1" href="index.html"><img src="./assets/images/ICON.png" class="sm"><img src="./assets/images/TASK.png"
-      class="lg"></a>
+        class="lg"></a>
 
-      <!-- Navbar Search -->
-      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Digite o nome do usuário..." aria-label="Search"
+    <!-- Navbar Search -->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Digite o nome do usuário..." aria-label="Search"
           aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-task-alt btn-task-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+        <div class="input-group-append">
+          <button class="btn btn-task-alt btn-task-primary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
-      </form>
+      </div>
+    </form>
 
-      <!-- Navbar -->
-      <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0">
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
@@ -83,121 +80,56 @@
         <a class="nav-link" href="charts.html">
           <i class="fas fa-plus-circle"></i>
           <span>Nova Task</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Ver Funcionário</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Ver Funcionário</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-tasks"></i>
+          <span>Ver Tasks</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Dados</span></a>
+      </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="index.html">Painel de Controle</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-              <i class="fas fa-tasks"></i>
-              <span>Ver Tasks</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Dados</span></a>
-              </li>
-            </ul>
-
-            <div id="content-wrapper">
-
-              <div class="container-fluid">
-
-                <!-- Breadcrumbs-->
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a href="index.html">Painel de Controle</a>
-                  </li>
-                  <li class="breadcrumb-item active">Visão Geral</li>
-                </ol>
-                <div class="row">
-                  <div class="card col-md-12">
-                    <div class="card-body">
-                      <div class="d-md-inline-block">
-                        <h1> Lista de Tasks </h1>
-                      </div>
-<!--                       <div class="col-md-4 float-right" >
-                        <form class="form-inline">
-                          <div class="form-group mx-sm-3 mb-2">
-                            <label for="input_search" class="sr-only">Pesquisar</label>
-                            <input type="text" class="form-control" id="input_search" placeholder="Pesquisar">
-                          </div>
-                          <button type="submit" class="btn btn-primary mb-2">Buscar</button>
-                        </form>
-                      </div> -->
-                      <table class="table table-striped table-condensed table-datatable" id="tabela_tasks">
-                        <thead>
-                          <tr>
-                            <th scope="col">Data</th>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Departamento</th>
-                            <th scope="col">Prioridade</th>
-                            <th scope="col">Encarregado</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>13/10/2018</td>
-                            <td>Lâmpada quebrada</td>
-                            <td>Manutenção Elétrica</td>
-                            <td>Alta</td>
-                            <td>Darlan Nakamura</td>
-                            <td>
-                             <div class="btn-group">
-                              <button type="button" class="btn btn-sm btn-primary reset_multistep btn_img_task" data-toggle="modal" data-target="#modal_imagem">
-                                <div class="d-none d-sm-block">
-                                  Imagem
-                                </div>
-                                <div class="d-block d-sm-none">
-                                  <i class="fas fa-edit fa-fw"></i>
-                                </div>
-                              </button>
-                              <button type="button" class="btn btn-sm btn-secondary reset_multistep btn_data_task btn-attr-ordem_servico_pk" data-toggle="modal" data-target="#modal_dados">
-                                <div class="d-none d-sm-block">
-                                  Editar
-                                </div>
-                                <div class="d-block d-sm-none">
-                                  <i class="fas fa-edit fa-fw"></i>
-                                </div>
-                              </button>
-                              <button type="button" class="btn btn-sm btn-danger reset_multistep btn_delete_task" data-toggle="modal" data-target="#modal_delete">
-                                <div class="d-none d-sm-block">
-                                  Excluir
-                                </div>
-                                <div class="d-block d-sm-none">
-                                  <i class="fas fa-times fa-fw"></i>
-                                </div>
-                              </button>
-                            </div>
-
-
-                          </td>
-
-
-                        </tr>
-  <!--                 <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td> -->
-                  </tr>
-                </tbody>
-              </table>
+          <li class="breadcrumb-item active">Visão Geral</li>
+        </ol>
+        <div class="card">
+          <div class="card-body">
+            <div class="d-md-inline-block">
+              <h1> Lista de Tasks </h1>
             </div>
-          </div>
-        </div>
+            <table class="table table-striped table-condensed table-datatable" id="tabela_tasks">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Descrição</th>
+                  <th scope="col">Departamento</th>
+                  <th scope="col">Prioridade</th>
+                  <th scope="col">Encarregado</th>
+                  <th scope="col btn-group"> </th>
+                </tr>
+              </thead>
+              <tbody>
 
-        <div class="card col-md-12">
-          <div id="map">
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -222,174 +154,268 @@
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Selecione "Sair" caso queira encerrar a sessão.</div>
-        <div class="modal-footer">
-          <button class="btn btn-task-alt btn-task-secondary" type="button" data-dismiss="modal">Cancelar (Voltar
-          para o Painel)</button>
-          <a class="btn btn-task-alt btn-task-primary" href="login.html">Sair</a>
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Deseja sair?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Selecione "Sair" caso queira encerrar a sessão.</div>
+          <div class="modal-footer">
+            <button class="btn btn-task-alt btn-task-secondary" type="button" data-dismiss="modal">Cancelar (Voltar
+              para o Painel)</button>
+            <a class="btn btn-task-alt btn-task-primary" href="login.html">Sair</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Map Modal-->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header" id="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="infoModalDescription">
+            <div id="map" class="map"></div>
+            <img class="modal-img">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-task-alt btn-task-secondary" type="button" data-dismiss="modal">Sair</button>
+            <a class="btn btn-task-alt btn-task-primary" href="login.html">Excluir</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-  <script src="js/dashboard/utils.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-  <script src="js/demo/chart-area-demo.js"></script>
-
-  <script>
-
-    var main_marker;
-    var map, heatmap;
-
-    $(document).ready(function(){
-
-      var url = 'http://192.168.0.76:5000/api/task?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYzFmODE5NzM1MWVkNGM4NjhhOWY5YiIsImlhdCI6MTUzOTQzOTQ1Mn0.fEbV4eUdUnGbwdGRRKBe2uk87WFgKhNGYvUPDuZ1iHw';
-
-      $.get(url).done(function (response) {
-        if (response.code == 200){
-          console.log(response);
-          writeTable(response.tasks);
-          setTasksOnMap(response.tasks);
-
-        }else{
-          alert('Falhou filha da puta!');
-        }
-      // update_table();
-      // $('#d_servico').modal('hide');
-    });
-
-    });
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="js/dashboard/utils.js"></script>
 
 
-    function getFormattedDate(date) {
-      var year = date.getFullYear();
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
 
-      var month = (1 + date.getMonth()).toString();
-      month = month.length > 1 ? month : '0' + month;
+    <!-- Demo scripts for this page-->
+    <script src="js/demo/datatables-demo.js"></script>
+    <script src="js/demo/chart-area-demo.js"></script>
 
-      var day = date.getDate().toString();
-      day = day.length > 1 ? day : '0' + day;
+    <script>
+        
+      var varTasks;
+      var map, heatmap, coordXZ;
+      let currentLocationMarker, taskLocationMarker;
 
-      var hour = date.getHours().toString();
-      var minutes = date.getMinutes().toString();
+      $(document).ready(function () {
 
-      return month + '/' + day + '/' + year +" " + hour + ':' + minutes;
-    }
+        var url = 'http://192.168.0.76:5000/api/task?access_token=' + window.localStorage.getItem("token");
 
-    writeTable = (tasks) =>{
+        $.get(url).done(function (response) {
+          if (response.code == 200) {
+            console.log(response);
+            writeTable(response.tasks);
 
-      for(var i = 0; i < tasks.length; i++){
-        var date = new Date(tasks[i].created_at);
-        var date_formatted = getFormattedDate(date);
-        var priority, department;
+          } else {
+            console.log("Failed get");
+          }
+        });
 
-        switch(tasks[i].priority){
-          case 0:
-          department = "Manutenção Elétrica";
-          priority = "Baixa";
-          break;
-          case 1:
-          department = "Camararia";
-          priority = "Média";
-          break;
-          case 2:
-          department = "Manutenção Mecânica";
-          priority = "Alta";
-          break;
-          case 3:
-          department = "Limpeza";
-          priority = "Emergencial";
-          break;
-          default:
-          department = "Não definido";
-          priority = "Não definida";
-          break;
-        }
-
-        table.row.add([
-          date_formatted,
-          tasks[i].description,
-          department,
-          priority,
-          'Darlan Nakamura',
-          '<div class="btn-group">' +  '<button type="button" class="btn btn-sm btn-primary reset_multistep btn_img_task' + 
-          '" data-toggle="modal" value="<'+ i +'>" data-target="#modal_imagem">' +
-          '<div class="d-none d-sm-block">' +'Foto </div> <div class="d-block d-sm-none"> <i class="fas fa-edit fa-fw">' +
-          '</i></div></button><button type="button" class="btn btn-sm btn-secondary reset_multistep btn_data_task' + 
-          'btn-attr-ordem_servico_pk" data-toggle="modal" value="<'+ i +'>" data-target="#modal_dados">' + 
-          '<div class="d-none d-sm-block" style="background-color: #ff701a"> Editar </div> <div class="d-block d-sm-none"><i class="fas fa-edit fa-fw">'+ 
-          '</i></div></button><button type="button" class="btn btn-sm btn-danger reset_multistep btn_delete_task"'+ 
-          'data-toggle="modal" value="<'+ i +'>"data-target="#modal_delete"><div class="d-none d-sm-block">'+'Excluir</div><div' +
-          'class="d-block d-sm-none"><i class="fas fa-times fa-fw"></i></div></button></div>'
-          ]).draw(false);
-      }
-    }
-
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 17,
-        center: {lat: -22.121265, lng: -51.383400},
-        mapTypeId: 'satellite'
       });
 
 
-      setTasksOnMap = (tasks) =>{
-        for(var i = 0; i < tasks.length; i++){
-          console.log(tasks[i].location);
-          location_formatted = {
-            lat : parseFloat(tasks[i].location.lat),
-            lng : parseFloat(tasks[i].location.lng)
-          }                
-          createMarker(location_formatted, tasks[i].description);
+      function getFormattedDate(date) {
+        var year = date.getFullYear();
+
+        var month = (1 + date.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month;
+
+        var day = date.getDate().toString();
+        day = day.length > 1 ? day : '0' + day;
+
+        var hour = date.getHours().toString();
+        var minutes = date.getMinutes().toString();
+
+        return month + '/' + day + '/' + year + " " + hour + ':' + minutes;
+      }
+
+      function showInfo(id) {
+        $('#infoModalLabel').last().remove();
+        $('#modal-img').last().remove();
+        $('#modal-header').prepend(`
+            <h5 class="modal-title" id="infoModalLabel">${varTasks[id].description}</h5>`);
+        $('#infoModalDescription').prepend(`
+        <img id="modal-img" src="${varTasks[id].image}" style="max-width: 100%"/>`);
+        $('#infoModal').modal('show');
+        var pos = {
+          lat: varTasks[id].location.lat,
+          lng: varTasks[id].location.long
+        };
+        console.log(varTasks[id].image);
+        console.log(varTasks[id]);
+        console.log(varTasks[id].location.lat);
+        console.log(varTasks[id].location.long);
+
+        taskLocationMarker.setPosition(pos);
+        map.panTo(pos);
+      }
+
+
+      function deleteInfo(id) {
+        $.ajax({
+          type: "DELETE",
+          datatype: "json",
+          url: `http://192.168.0.76:5000/api/task/${id}?access_token=${window.localStorage.getItem("token")}`,
+          success: function (result) {
+            if (result.code == 200) // you should do your checking here
+            {
+              alert("Task deletada");
+            }
+            else {
+              alert("Não foi possível concluir");
+            }
+          }
+        });
+        table.row.delete(id).draw();
+      }
+
+      writeTable = (tasks) => {
+        if (tasks != null) {
+          varTasks = tasks;
+          for (var i = 0; i < tasks.length; i++) {
+            var date = new Date(tasks[i].created_at);
+            var date_formatted = getFormattedDate(date);
+            var priority, department;
+
+            switch (tasks[i].priority) {
+              case 0:
+                department = "Manutenção Elétrica";
+                priority = "Baixa";
+                break;
+              case 1:
+                department = "Camareira";
+                priority = "Média";
+                break;
+              case 2:
+                department = "Manutenção Mecânica";
+                priority = "Alta";
+                break;
+              case 3:
+                department = "Limpeza";
+                priority = "Emergencial";
+                break;
+              default:
+                department = "Não definido";
+                priority = "Não definida";
+                break;
+            }
+
+            table.row.add([
+              i,
+              date_formatted,
+              tasks[i].description,
+              department,
+              priority,
+              'Darlan Nakamura',
+              `<div class='btn-group'>
+              <button class='btn btn-primary btn-details' onclick="showInfo('${i}')" >VER</button>
+             <button class='btn btn-danger btn-exclude' onclick="deleteInfo('${tasks[i]._id}')" >X</button>
+             </div>`
+            ]).draw(false);
+          }
         }
       }
 
-      createMarker = (location, title) => {
-        main_marker = new google.maps.Marker({
-          position: location,
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: { lat: 37.775, lng: -122.434 },
+          mapTypeId: 'satellite'
+        });
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: getPoints(),
+          map: map
+        });
+
+        taskLocationMarker = new google.maps.Marker({
+          position: (0, 0),
           map: map,
-          title: title
+          icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+          },
+          title: "Darlan Nakamura"
         });
       }
-    }
 
-    function toggleHeatmap() {
-      heatmap.setMap(heatmap.getMap() ? null : map);
-    }
-  </script>
+      function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+      }
 
+      function changeGradient() {
+        var gradient = [
+          'rgba(0, 255, 255, 0)',
+          'rgba(0, 255, 255, 1)',
+          'rgba(0, 191, 255, 1)',
+          'rgba(0, 127, 255, 1)',
+          'rgba(0, 63, 255, 1)',
+          'rgba(0, 0, 255, 1)',
+          'rgba(0, 0, 223, 1)',
+          'rgba(0, 0, 191, 1)',
+          'rgba(0, 0, 159, 1)',
+          'rgba(0, 0, 127, 1)',
+          'rgba(63, 0, 91, 1)',
+          'rgba(127, 0, 63, 1)',
+          'rgba(191, 0, 31, 1)',
+          'rgba(255, 0, 0, 1)'
+        ]
+        heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+      }
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap"></script>
+      function changeRadius() {
+        heatmap.set('radius', heatmap.get('radius') ? null : 20);
+      }
+
+      function changeOpacity() {
+        heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+      }
+
+      // Heatmap data: 500 Points
+      function getPoints() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          map.setCenter(pos);
+
+          let marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: 'Task' 
+          });
+        });
+        return [
+        ];
+      }
+    
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap"></script>
 
 </body>
 
 </html>
-
