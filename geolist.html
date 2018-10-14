@@ -14,10 +14,6 @@
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
@@ -35,6 +31,15 @@
 
       .vermelho{
         color: #FF0000;
+      }
+
+      .modal-dialog.funcionarioModal {
+        max-width: 100px;
+        margin: 1.75rem auto;
+      }
+      
+      h6{
+        font-size: 10px;
       }
     </style>
 
@@ -121,18 +126,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h1>Funcionários</h1>
-
-                        <div class="col-md-4 float-right" >
-                          <form class="form-inline">
-                            <div class="form-group mx-sm-3 mb-2">
-                              <label for="input_search" class="sr-only">Pesquisar</label>
-                              <input type="text" class="form-control" id="input_search" placeholder="Pesquisar">
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2">Buscar</button>
-                          </form>
-                        </div>
-                        
-                        <table class="table table-striped table-condensed">
+                        <!-- Tabela de Funcionarios ativos -->
+                        <table class="table table-striped table-condensed table-datatable" id="consultar_usuarios">
                           <thead>
                           <tr>
                               <th>ID</th>
@@ -143,27 +138,37 @@
                           <tbody>
                             <tr>
                                 <td>001</td>
-                                <td>Jabes Vinicius</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Jabes Vinicius </a></td>
                                 <td><i class="fas fa-check-circle verde"></i></td>                                       
                             </tr>
                             <tr>
                                 <td>0002</td>
-                                <td>Matheus Zika Palmeira</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal"> Matheus Zika Palmeira </a></td>
                                 <td><i class="fas fa-check-circle verde"></i></td>                                       
                             </tr>
                             <tr>
                                 <td>003</td>
-                                <td>Darlanzin Nakamura</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Darlanzin Nakamura</a></td>
                                 <td><i class="fas fa-check-circle verde"></i></td>                                        
                             </tr>
                             <tr>
                                 <td>004</td>
-                                <td>Pietro Crazy</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Pietro Crazy</a></td>
                                 <td><i class="fas fa-times-circle vermelho"></i></td>                                 
                             </tr>
                             <tr>
                                 <td>005</td>
-                                <td>Luiz Monginho</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Luiz Monginho</a></td>
+                                <td><i class="fas fa-times-circle vermelho"></i></td>                               
+                            </tr> 
+                            <tr>
+                                <td>006</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Giulinha</a></td>
+                                <td><i class="fas fa-times-circle vermelho"></i></td>                               
+                            </tr> 
+                            <tr>
+                                <td>007</td>
+                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Mariah de Campos</a></td>
                                 <td><i class="fas fa-times-circle vermelho"></i></td>                               
                             </tr>                                   
                           </tbody>
@@ -204,13 +209,40 @@
                     <div class="modal-body">Selecione "Sair" caso queira encerrar a sessão.</div>
                     <div class="modal-footer">
                         <button class="btn btn-task-alt btn-task-secondary" type="button" data-dismiss="modal">Cancelar
-                            (Voltar
-                            para o Painel)</button>
+                            (Voltar para o Painel)</button>
                         <a class="btn btn-task-alt btn-task-primary" href="login.html">Sair</a>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- Modal de funcionario -->
+        <div class="modal" id="funcionarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Nome do funcionário</h5>
+                        <button class="btn btn-task-alt btn-task-primary" type="button">
+                            <i class="fas fa-comments fa-lg"></i>
+                        </button>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div id="map"></div>
+                    <div class="card-body">
+                      <h6>Última atualização: 13/10 ás 22:58</h6>
+                      <hr>
+                      <h4>Dados</h4>
+                      <h5>Telefone 666-666</h5>
+                      <h5>Departamento das loucuras</h5>
+                      <h5>Task Atual: <small>Arrumando as lâmpadas</small></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -229,6 +261,138 @@
         <!-- Demo scripts for this page-->
         <script src="js/demo/datatables-demo.js"></script>
         <script src="js/demo/chart-area-demo.js"></script>
+
+        <script>
+          var map, heatmap, coordXZ;
+            let currentLocationMarker;
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 17,
+                    center: { lat: 37.775, lng: -122.434 },
+                    mapTypeId: 'satellite'
+                });
+
+                heatmap = new google.maps.visualization.HeatmapLayer({
+                    data: getPoints(),
+                    map: map
+                });
+
+
+                map.addListener('click', setNewLocation);
+            }
+
+            function toggleHeatmap() {
+                heatmap.setMap(heatmap.getMap() ? null : map);
+            }
+
+            function changeGradient() {
+                var gradient = [
+                    'rgba(0, 255, 255, 0)',
+                    'rgba(0, 255, 255, 1)',
+                    'rgba(0, 191, 255, 1)',
+                    'rgba(0, 127, 255, 1)',
+                    'rgba(0, 63, 255, 1)',
+                    'rgba(0, 0, 255, 1)',
+                    'rgba(0, 0, 223, 1)',
+                    'rgba(0, 0, 191, 1)',
+                    'rgba(0, 0, 159, 1)',
+                    'rgba(0, 0, 127, 1)',
+                    'rgba(63, 0, 91, 1)',
+                    'rgba(127, 0, 63, 1)',
+                    'rgba(191, 0, 31, 1)',
+                    'rgba(255, 0, 0, 1)'
+                ]
+                heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+            }
+
+            function changeRadius() {
+                heatmap.set('radius', heatmap.get('radius') ? null : 20);
+            }
+
+            function changeOpacity() {
+                heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+            }
+
+            // Heatmap data: 500 Points
+            function getPoints() {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map.setCenter(pos);
+                    let marker = new google.maps.Marker({
+                        position: pos,
+                        map: map
+                    });
+                });
+                return [
+                    new google.maps.LatLng(-22.133521, -51.4482311),
+                    new google.maps.LatLng(-22.134058, -51.4514287),
+                    new google.maps.LatLng(-22.134058, -51.4514287),
+                ];
+            }
+
+          $(document).ready(function() {
+
+            $('#consultar_usuarios').dataTable({
+              "bJQueryUI": true,
+              "sPaginationType": "full_numbers",
+              "sDom": '<"H"Tlfr>t<"F"ip>',
+              "oTableTools": {
+                "sSwfPath": "../../js/DataTables-1.9.4/extras/TableTools/media/swf/" +
+                "copy_csv_xls_pdf.swf",
+                "aButtons": [
+                {
+                  "sExtends": "xls",
+                  "sButtonText": "Exportar para Excel",
+                  "sTitle": "Usuarios",
+                  "mColumns": [0, 1, 2, 3]
+                },
+                {
+                  "sExtends": "pdf",
+                  "sButtonText": "Exportar para PDF",
+                  "sTitle": "Usuarios",
+                  "sPdfOrientation": "landscape",
+                  "mColumns": [0, 1, 2, 3]
+                }
+                ]
+              },
+              "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ registros por página",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+                "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
+                "sInfoFiltered": "(filtrado de _MAX_ registros)",
+                "sSearch": "Pesquisar: ",
+                "oPaginate": {
+                  "sFirst": "Início",
+                  "sPrevious": "Anterior",
+                  "sNext": "Próximo",
+                  "sLast": "Último"
+                }
+              },
+              "aaSorting": [[0, 'desc']],
+              "aoColumnDefs": [
+              {"sType": "num-html", "aTargets": [0]}
+
+              ]
+            });    
+      });//fim jquery
+
+        $.ajax({
+            type: "GET",
+            datatype: "json",
+            url: "http://192.168.0.76:5000/api/user/connected?access_token="+window.localStorage.getItem("token"),
+            success: function (result) {
+              console.log(result);
+            }
+      });
+
+    </script>
+
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap"></script>
 
 </body>
 
