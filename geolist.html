@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>DashTask</title>
+    <title>Dashboard</title>
 
     <!-- Bootstrap core CSS-->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -103,8 +103,8 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="tasklist.html">
-                    <i class="fas fa-tasks"></i>
-                    <span>Ver Tasks</span></a>
+                    <i class="fas fa-Users"></i>
+                    <span>Ver Users</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="datalist.html">
@@ -127,50 +127,20 @@
                     <div class="card-body">
                         <h1>Funcionários</h1>
                         <!-- Tabela de Funcionarios ativos -->
-                        <table class="table table-striped table-condensed table-datatable" id="consultar_usuarios">
+                        <table class="table table-striped table-condensed table-datatable">
                           <thead>
                           <tr>
-                              <th>ID</th>
+                              <th>E-mail</th>
                               <th>Nome</th>
-                              <th>Status</th>                                          
+                              <th>Departamento</th>                                          
                           </tr>
                           </thead>   
                           <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td>001</td>
                                 <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Jabes Vinicius </a></td>
                                 <td><i class="fas fa-check-circle verde"></i></td>                                       
-                            </tr>
-                            <tr>
-                                <td>0002</td>
-                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal"> Matheus Zika Palmeira </a></td>
-                                <td><i class="fas fa-check-circle verde"></i></td>                                       
-                            </tr>
-                            <tr>
-                                <td>003</td>
-                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Darlanzin Nakamura</a></td>
-                                <td><i class="fas fa-check-circle verde"></i></td>                                        
-                            </tr>
-                            <tr>
-                                <td>004</td>
-                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Pietro Crazy</a></td>
-                                <td><i class="fas fa-times-circle vermelho"></i></td>                                 
-                            </tr>
-                            <tr>
-                                <td>005</td>
-                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Luiz Monginho</a></td>
-                                <td><i class="fas fa-times-circle vermelho"></i></td>                               
-                            </tr> 
-                            <tr>
-                                <td>006</td>
-                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Giulinha</a></td>
-                                <td><i class="fas fa-times-circle vermelho"></i></td>                               
-                            </tr> 
-                            <tr>
-                                <td>007</td>
-                                <td><a href="#" data-toggle="modal" data-target="#funcionarioModal">Mariah de Campos</a></td>
-                                <td><i class="fas fa-times-circle vermelho"></i></td>                               
-                            </tr>                                   
+                            </tr> -->
                           </tbody>
                         </table>
                     </div>
@@ -222,7 +192,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Nome do funcionário</h5>
+                        <h5 class="modal-title" id="nome_funcionario"></h5>
                         <button class="btn btn-task-alt btn-task-primary" type="button">
                             <i class="fas fa-comments fa-lg"></i>
                         </button>
@@ -235,9 +205,9 @@
                       <h6>Última atualização: 13/10 ás 22:58</h6>
                       <hr>
                       <h4>Dados</h4>
-                      <h5>Telefone 666-666</h5>
-                      <h5>Departamento das loucuras</h5>
-                      <h5>Task Atual: <small>Arrumando as lâmpadas</small></h5>
+                      <h5 id="departamento"></h5>
+                      <h5 id="task_atual"><small></small></h5>
+                      <h5>Telefone: 98965-8963</h5>
                     </div>
                 </div>
             </div>
@@ -254,6 +224,7 @@
         <!-- Page level plugin JavaScript-->
         <script src="vendor/datatables/jquery.dataTables.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+         <script src="js/dashboard/utils.js"></script>
 
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin.min.js"></script>
@@ -263,8 +234,11 @@
         <script src="js/demo/chart-area-demo.js"></script>
 
         <script>
+
           var map, heatmap, coordXZ;
             let currentLocationMarker;
+
+            var url = 'http://192.168.0.76:5000/api/user?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYzFmODE5NzM1MWVkNGM4NjhhOWY5YiIsImlhdCI6MTUzOTQzOTQ1Mn0.fEbV4eUdUnGbwdGRRKBe2uk87WFgKhNGYvUPDuZ1iHw';
 
             function initMap() {
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -315,7 +289,7 @@
             }
 
             // Heatmap data: 500 Points
-            function getPoints() {
+            function getPoints(location) {
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var pos = {
                         lat: position.coords.latitude,
@@ -328,71 +302,79 @@
                     });
                 });
                 return [
-                    new google.maps.LatLng(-22.133521, -51.4482311),
-                    new google.maps.LatLng(-22.134058, -51.4514287),
-                    new google.maps.LatLng(-22.134058, -51.4514287),
+                    new google.maps.LatLng(location.lat, location.lng)
                 ];
             }
 
-          $(document).ready(function() {
 
-            $('#consultar_usuarios').dataTable({
-              "bJQueryUI": true,
-              "sPaginationType": "full_numbers",
-              "sDom": '<"H"Tlfr>t<"F"ip>',
-              "oTableTools": {
-                "sSwfPath": "../../js/DataTables-1.9.4/extras/TableTools/media/swf/" +
-                "copy_csv_xls_pdf.swf",
-                "aButtons": [
-                {
-                  "sExtends": "xls",
-                  "sButtonText": "Exportar para Excel",
-                  "sTitle": "Usuarios",
-                  "mColumns": [0, 1, 2, 3]
-                },
-                {
-                  "sExtends": "pdf",
-                  "sButtonText": "Exportar para PDF",
-                  "sTitle": "Usuarios",
-                  "sPdfOrientation": "landscape",
-                  "mColumns": [0, 1, 2, 3]
+            setUsersOnMap = (users) =>{
+                for(var i = 0; i < users.length; i++){
+                  console.log(Users[i].location);
+                  location_formatted = {
+                    lat : parseFloat(users[i].location.lat),
+                    lng : parseFloat(users[i].location.lng)
+                  }                
+                  getPoints(location_formatted);
                 }
-                ]
-              },
-              "oLanguage": {
-                "sLengthMenu": "Mostrar _MENU_ registros por página",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-                "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
-                "sInfoFiltered": "(filtrado de _MAX_ registros)",
-                "sSearch": "Pesquisar: ",
-                "oPaginate": {
-                  "sFirst": "Início",
-                  "sPrevious": "Anterior",
-                  "sNext": "Próximo",
-                  "sLast": "Último"
-                }
-              },
-              "aaSorting": [[0, 'desc']],
-              "aoColumnDefs": [
-              {"sType": "num-html", "aTargets": [0]}
-
-              ]
-            });    
-      });//fim jquery
-
-        $.ajax({
-            type: "GET",
-            datatype: "json",
-            url: "http://192.168.0.76:5000/api/user/connected?access_token="+window.localStorage.getItem("token"),
-            success: function (result) {
-              console.log(result);
             }
-      });
+
+            writeTable = (users) =>{
+              console.log(users);
+              for(var i = 0; i < users.length; i++){
+                table.row.add([
+                  users[i].email,  
+                  '<a href="#" data-toggle="modal" data-target="#funcionarioModal" class="modal-funcionario" id="'+users[i]._id+'" onclick="giulia(this);">'+users[i].name+'</a>',
+                  users[i].department,
+                  ]).draw(false);
+              }
+            }
+
+            function giulia(element){
+                id = element.id;
+                var id_do_funcionario = id;
+                // alert(id);
+
+                console.log(id_do_funcionario);
+                var url_funcionario = 'http://192.168.0.76:5000/api/user/'+id_do_funcionario+'?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYzFmODE5NzM1MWVkNGM4NjhhOWY5YiIsImlhdCI6MTUzOTQzOTQ1Mn0.fEbV4eUdUnGbwdGRRKBe2uk87WFgKhNGYvUPDuZ1iHw';
+
+                $.get(url_funcionario).done(function (response) {
+                if (response.code == 200){
+                    $('#nome_funcionario').html(response.user.name);
+                    $('#departamento').html(response.user.department);
+                    $('#nome_funcionario').html(response.user.task_atual);
+
+                }else{
+                  alert('Falhou!');
+                }
+                  // update_table();
+                  // $('#d_servico').modal('hide');
+                });
+            };
+
+
+        $(document).ready(function() {
+            
+            // var url: "http://192.168.0.76:5000/api/user/connected?access_token="+window.localStorage.getItem("token");
+
+            $.get(url).done(function (response) {
+                if (response.code == 200){
+                  console.log(response);
+                  writeTable(response.users);
+                  setUsersOnMap(response.users);
+
+                }else{
+                  alert('Falhou!');
+                }
+              // update_table();
+              // $('#d_servico').modal('hide');
+            });
+
+           
+        });
 
     </script>
 
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap"></script>
 
 </body>
 
