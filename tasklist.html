@@ -20,7 +20,7 @@
   <!-- Page level plugin CSS-->
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/> -->
 
 
   <!-- Custom styles for this template-->
@@ -112,81 +112,13 @@
                   </li>
                   <li class="breadcrumb-item active">Visão Geral</li>
                 </ol>
-
-                <!-- Icon Cards-->
-                <div class="row">
-                  <div class="col-xl-3 col-sm-6 mb-3">
-                    <div class="card text-white bg-success o-hidden h-80">
-                      <div class="card-body">
-                        <div class="card-body-icon">
-                          <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div class="mr-5">ADICIONAR TASK</div>
-                      </div>
-                      <a class="card-footer text-white clearfix small z-1" href="addtask.html">
-                        <span class="float-left">Nova Task </span>
-                        <span class="">
-                          <i class="fas fa-angle-right"></i>
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6 mb-3">
-                    <div class="card text-white bg-primary o-hidden h-80">
-                      <div class="card-body">
-                        <div class="card-body-icon">
-                          <i class="fas fa-users-cog"></i>
-                        </div>
-                        <div class="mr-5">26 Usuarios Ativos</div>
-                      </div>
-                      <a class="card-footer text-white clearfix small z-1" href="geolist.html">
-                        <span class="float-left">Ver Detalhes </span>
-                        <span class="">
-                          <i class="fas fa-angle-right"></i>
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6 mb-3">
-                    <div class="card text-white bg-warning o-hidden h-80">
-                      <div class="card-body">
-                        <div class="card-body-icon">
-                          <i class="fas fa-fw fa-list"></i>
-                        </div>
-                        <div class="mr-5">25 Tasks Ativas</div>
-                      </div>
-                      <a class="card-footer text-white clearfix small z-1" href="tasklist.html">
-                        <span class="float-left">Ver Detalhes </span>
-                        <span class="">
-                          <i class="fas fa-angle-right"></i>
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6 mb-3">
-                    <div class="card text-white bg-danger o-hidden h-80">
-                      <div class="card-body">
-                        <div class="card-body-icon">
-                          <i class="fas fa-business-time"></i>
-                        </div>
-                        <div class="mr-5">87 Hisórico de Tasks</div>
-                      </div>
-                      <a class="card-footer text-white clearfix small z-1" href="datalist.html">
-                        <span class="float-left">Ver Detalhes</span>
-                        <span class="">
-                          <i class="fas fa-angle-right"></i>
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
                 <div class="row">
                   <div class="card col-md-12">
                     <div class="card-body">
                       <div class="d-md-inline-block">
                         <h1> Lista de Tasks </h1>
                       </div>
-                      <div class="col-md-4 float-right" >
+<!--                       <div class="col-md-4 float-right" >
                         <form class="form-inline">
                           <div class="form-group mx-sm-3 mb-2">
                             <label for="input_search" class="sr-only">Pesquisar</label>
@@ -194,8 +126,8 @@
                           </div>
                           <button type="submit" class="btn btn-primary mb-2">Buscar</button>
                         </form>
-                      </div>
-                      <table class="table table-striped table-condensed" id="tabela_tasks">
+                      </div> -->
+                      <table class="table table-striped table-condensed table-datatable" id="tabela_tasks">
                         <thead>
                           <tr>
                             <th scope="col">Data</th>
@@ -203,6 +135,7 @@
                             <th scope="col">Departamento</th>
                             <th scope="col">Prioridade</th>
                             <th scope="col">Encarregado</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -212,7 +145,39 @@
                             <td>Manutenção Elétrica</td>
                             <td>Alta</td>
                             <td>Darlan Nakamura</td>
-                          </tr>
+                            <td>
+                             <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-primary reset_multistep btn_img_task" data-toggle="modal" data-target="#modal_imagem">
+                                <div class="d-none d-sm-block">
+                                  Imagem
+                                </div>
+                                <div class="d-block d-sm-none">
+                                  <i class="fas fa-edit fa-fw"></i>
+                                </div>
+                              </button>
+                              <button type="button" class="btn btn-sm btn-secondary reset_multistep btn_data_task btn-attr-ordem_servico_pk" data-toggle="modal" data-target="#modal_dados">
+                                <div class="d-none d-sm-block">
+                                  Editar
+                                </div>
+                                <div class="d-block d-sm-none">
+                                  <i class="fas fa-edit fa-fw"></i>
+                                </div>
+                              </button>
+                              <button type="button" class="btn btn-sm btn-danger reset_multistep btn_delete_task" data-toggle="modal" data-target="#modal_delete">
+                                <div class="d-none d-sm-block">
+                                  Excluir
+                                </div>
+                                <div class="d-block d-sm-none">
+                                  <i class="fas fa-times fa-fw"></i>
+                                </div>
+                              </button>
+                            </div>
+
+
+                          </td>
+
+
+                        </tr>
   <!--                 <tr>
                     <th scope="row">2</th>
                     <td>Jacob</td>
@@ -231,86 +196,10 @@
           </div>
         </div>
 
-        <!-- <div id="map"></div>
-        <script>
-
-          // This example requires the Visualization library. Include the libraries=visualization
-          // parameter when you first load the API. For example:
-          // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
-
-          var map, heatmap;
-
-          function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 17,
-              center: { lat: 37.775, lng: -122.434 },
-              mapTypeId: 'satellite'
-            });
-
-            heatmap = new google.maps.visualization.HeatmapLayer({
-              data: getPoints(),
-              map: map
-            });
-          }
-
-          function toggleHeatmap() {
-            heatmap.setMap(heatmap.getMap() ? null : map);
-          }
-
-          function changeGradient() {
-            var gradient = [
-              'rgba(0, 255, 255, 0)',
-              'rgba(0, 255, 255, 1)',
-              'rgba(0, 191, 255, 1)',
-              'rgba(0, 127, 255, 1)',
-              'rgba(0, 63, 255, 1)',
-              'rgba(0, 0, 255, 1)',
-              'rgba(0, 0, 223, 1)',
-              'rgba(0, 0, 191, 1)',
-              'rgba(0, 0, 159, 1)',
-              'rgba(0, 0, 127, 1)',
-              'rgba(63, 0, 91, 1)',
-              'rgba(127, 0, 63, 1)',
-              'rgba(191, 0, 31, 1)',
-              'rgba(255, 0, 0, 1)'
-            ]
-            heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-          }
-
-          function changeRadius() {
-            heatmap.set('radius', heatmap.get('radius') ? null : 20);
-          }
-
-          function changeOpacity() {
-            heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
-          }
-
-          // Heatmap data: 500 Points
-          function getPoints() {
-            navigator.geolocation.getCurrentPosition(function (position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-              map.setCenter(pos);
-            });
-            return [
-              new google.maps.LatLng(-22.133521, -51.4482311),
-              new google.maps.LatLng(-22.134058, -51.4514287),
-              new google.maps.LatLng(-22.134058, -51.4514287),
-            ];
-          }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap">
-
-
-
-
-
-
-
-        </script> -->
-
+        <div class="card col-md-12">
+          <div id="map">
+          </div>
+        </div>
 
         <!-- Sticky Footer -->
         <footer class="sticky-footer">
@@ -361,8 +250,11 @@
 
   <!-- Page level plugin JavaScript-->
   <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script> -->
+  <script src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+  <script src="js/dashboard/utils.js"></script>
+
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin.min.js"></script>
@@ -373,55 +265,129 @@
 
   <script>
 
-    $(document).ready(function() {
+    var main_marker;
+    var map, heatmap;
 
-      $('#consultar_usuarios').dataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "sDom": '<"H"Tlfr>t<"F"ip>',
-        "oTableTools": {
-          "sSwfPath": "../../js/DataTables-1.9.4/extras/TableTools/media/swf/" +
-          "copy_csv_xls_pdf.swf",
-          "aButtons": [
-          {
-            "sExtends": "xls",
-            "sButtonText": "Exportar para Excel",
-            "sTitle": "Usuarios",
-            "mColumns": [0, 1, 2, 3]
-          },
-          {
-            "sExtends": "pdf",
-            "sButtonText": "Exportar para PDF",
-            "sTitle": "Usuarios",
-            "sPdfOrientation": "landscape",
-            "mColumns": [0, 1, 2, 3]
-          }
-          ]
-        },
-        "oLanguage": {
-          "sLengthMenu": "Mostrar _MENU_ registros por página",
-          "sZeroRecords": "Nenhum registro encontrado",
-          "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-          "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
-          "sInfoFiltered": "(filtrado de _MAX_ registros)",
-          "sSearch": "Pesquisar: ",
-          "oPaginate": {
-            "sFirst": "Início",
-            "sPrevious": "Anterior",
-            "sNext": "Próximo",
-            "sLast": "Último"
-          }
-        },
-        "aaSorting": [[0, 'desc']],
-        "aoColumnDefs": [
-        {"sType": "num-html", "aTargets": [0]}
+    $(document).ready(function(){
 
-        ]
-      });    
-});//fim jquery
+      var url = 'http://192.168.0.76:5000/api/task?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViYzFmODE5NzM1MWVkNGM4NjhhOWY5YiIsImlhdCI6MTUzOTQzOTQ1Mn0.fEbV4eUdUnGbwdGRRKBe2uk87WFgKhNGYvUPDuZ1iHw';
 
-</script>
+      $.get(url).done(function (response) {
+        if (response.code == 200){
+          console.log(response);
+          writeTable(response.tasks);
+          setTasksOnMap(response.tasks);
 
+        }else{
+          alert('Falhou filha da puta!');
+        }
+      // update_table();
+      // $('#d_servico').modal('hide');
+    });
+
+    });
+
+
+    function getFormattedDate(date) {
+      var year = date.getFullYear();
+
+      var month = (1 + date.getMonth()).toString();
+      month = month.length > 1 ? month : '0' + month;
+
+      var day = date.getDate().toString();
+      day = day.length > 1 ? day : '0' + day;
+
+      var hour = date.getHours().toString();
+      var minutes = date.getMinutes().toString();
+
+      return month + '/' + day + '/' + year +" " + hour + ':' + minutes;
+    }
+
+    writeTable = (tasks) =>{
+
+      for(var i = 0; i < tasks.length; i++){
+        var date = new Date(tasks[i].created_at);
+        var date_formatted = getFormattedDate(date);
+        var priority, department;
+
+        switch(tasks[i].priority){
+          case 0:
+          department = "Manutenção Elétrica";
+          priority = "Baixa";
+          break;
+          case 1:
+          department = "Camararia";
+          priority = "Média";
+          break;
+          case 2:
+          department = "Manutenção Mecânica";
+          priority = "Alta";
+          break;
+          case 3:
+          department = "Limpeza";
+          priority = "Emergencial";
+          break;
+          default:
+          department = "Não definido";
+          priority = "Não definida";
+          break;
+        }
+
+        table.row.add([
+          date_formatted,
+          tasks[i].description,
+          department,
+          priority,
+          'Darlan Nakamura',
+          '<div class="btn-group">' +  '<button type="button" class="btn btn-sm btn-primary reset_multistep btn_img_task' + 
+          '" data-toggle="modal" value="<'+ i +'>" data-target="#modal_imagem">' +
+          '<div class="d-none d-sm-block">' +'Foto </div> <div class="d-block d-sm-none"> <i class="fas fa-edit fa-fw">' +
+          '</i></div></button><button type="button" class="btn btn-sm btn-secondary reset_multistep btn_data_task' + 
+          'btn-attr-ordem_servico_pk" data-toggle="modal" value="<'+ i +'>" data-target="#modal_dados">' + 
+          '<div class="d-none d-sm-block" style="background-color: #ff701a"> Editar </div> <div class="d-block d-sm-none"><i class="fas fa-edit fa-fw">'+ 
+          '</i></div></button><button type="button" class="btn btn-sm btn-danger reset_multistep btn_delete_task"'+ 
+          'data-toggle="modal" value="<'+ i +'>"data-target="#modal_delete"><div class="d-none d-sm-block">'+'Excluir</div><div' +
+          'class="d-block d-sm-none"><i class="fas fa-times fa-fw"></i></div></button></div>'
+          ]).draw(false);
+      }
+    }
+
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 17,
+        center: {lat: -22.121265, lng: -51.383400},
+        mapTypeId: 'satellite'
+      });
+
+
+      setTasksOnMap = (tasks) =>{
+        for(var i = 0; i < tasks.length; i++){
+          console.log(tasks[i].location);
+          location_formatted = {
+            lat : parseFloat(tasks[i].location.lat),
+            lng : parseFloat(tasks[i].location.lng)
+          }                
+          createMarker(location_formatted, tasks[i].description);
+        }
+      }
+
+      createMarker = (location, title) => {
+        main_marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          title: title
+        });
+      }
+    }
+
+    function toggleHeatmap() {
+      heatmap.setMap(heatmap.getMap() ? null : map);
+    }
+  </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEjAPCVxGTFlEnJ64vJUIGgPDwPMLzcHk&libraries=visualization&callback=initMap"></script>
 
 </body>
 
